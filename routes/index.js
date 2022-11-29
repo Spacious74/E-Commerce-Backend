@@ -5,6 +5,7 @@ let path = require('path');
 let categoryRoute = require('./categories.route')
 let productRoute = require('./products.route')
 let authRoute = require('./auth.route');
+let cartRoute = require('./cart.route');
 
 let router= express.Router();
 
@@ -18,6 +19,7 @@ router.get('/', (req, res) =>{
 router.use("/categories", categoryRoute);
 router.use("/products", productRoute);
 router.use("/auth", authRoute);
+router.use("/cart", cartRoute);
 
 module.exports = router;
 

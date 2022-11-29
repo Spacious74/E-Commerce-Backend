@@ -93,8 +93,6 @@ let insertRoles = async () => {
     ]);
 };
 
-
-
 expressApp.listen(serverConfig.PORT, () => {
     console.log("Server is running at Port " + serverConfig.PORT);
     init();
