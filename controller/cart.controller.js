@@ -1,11 +1,4 @@
-
-const Products = require('../Models/Product');
-let Cart = require('./../Models/Cart');
-let Product = require('./../Models/Product');
 let db = require('./../Models/index');
-let cart = db.cart;
-let product = db.product;
-
 
 
 let createCart = async (req, res, next) => {
@@ -13,7 +6,7 @@ let createCart = async (req, res, next) => {
         cost : 0
     };
     try {
-        await Cart.create(cart);
+        await db.cart.create(cart);
         res.status(200).json({
             message : "Cart Created successfully"
         });
@@ -26,9 +19,9 @@ let createCart = async (req, res, next) => {
 let updateCart = async (req, res, next) => {
     
     const cartId = req.params.cartId;
-    let cartToUpdate = await Cart.findByPk(cartId);
+    let cartToUpdate = await db.cart.findByPk(cartId);
     if (cartToUpdate) {
-        let productsToAdd = await Products.findAll({
+        let productsToAdd = await db.product.findAll({
             where : {
                 id : req.body.productIds,
             }
@@ -36,7 +29,7 @@ let updateCart = async (req, res, next) => {
 
         if(productsToAdd){
             await cartToUpdate.setProducts(productsToAdd);
-            console.log("Products Added");
+            console.log("db.product Added");
             let totalcost = 0;
             let productsSelected = [];
             let products = await cartToUpdate.getProducts();
@@ -63,7 +56,7 @@ let updateCart = async (req, res, next) => {
 
 }
 let getCart = async (req, res, next) => {
-    let cart = await Cart.findByPk(req.params.cartId);
+    let cart = await db.cart.findByPk(req.params.cartId);
     let totalcost = 0;
     let productsSelected = [];
     let products = await cart.getProducts();

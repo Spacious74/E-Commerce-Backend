@@ -4,27 +4,25 @@ let bodyParser = require('body-parser');
 let serverConfig = require("./config/server.config");   
 let router = require("./routes/index");
 let ErrorHandler = require('./middlewares/ErrorHandler');
-let sequelizeInstance = require('./config/db.config');
+
 // Models
-let Category = require('./Models/Category');
-let Products = require('./Models/Product');
-let Roles  = require("./Models/Roles");
+const db = require('./Models/index'); // all models are in one file 
 
 expressApp.use(bodyParser.json());
 expressApp.use(router);
 expressApp.use(ErrorHandler);
 
-Category.hasMany(Products);
+db.categories.hasMany(db.product);
 
 let init = async () =>{
-    await sequelizeInstance.sync({force : true});
+    await db.sequelizeInstance.sync({force : true});
     insertCategories();
     insertProducts();
     insertRoles();
 };
 
 let insertCategories = async () => {
-    await Category.bulkCreate(
+    await db.categories.bulkCreate(
         [
             {
                 name: "Mobiles",
@@ -46,7 +44,7 @@ let insertCategories = async () => {
     );
 };
 let insertProducts = async() => {
-    await Products.bulkCreate(
+    await db.product.bulkCreate(
         [{
                 name: "Samsung Galaxy Note",
                 price: 18000,
@@ -81,7 +79,7 @@ let insertProducts = async() => {
     );
 }
 let insertRoles = async () => {
-    await Roles.bulkCreate([
+    await db.roles.bulkCreate([
         {
             id: 1,
             name : "user",

@@ -15,6 +15,5 @@ describe("My false test suite", ()=>{
         expect(square()).toBe("Please enter numbers");
         expect(square(Infinity)).toBe(Infinity);
         expect(square(2,9)).toBe(4);
-        
     })
 })

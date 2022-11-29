@@ -1,19 +1,31 @@
-const sequelize = require("sequelize");
-const sequelizeInstance = new sequelize(
- "ecomm_db",
- "root",
- "uservishal098",
-    {
-        host: "localhost",
-        dialect: "mysql",
-        operatorsAliases: 0,
-        pool: {
-            max: 5,
-            min: 0,
-            acquire:30000,
-            idle: 10000
-        }
+const developmentInstance = {
+    DB: "ecomm_db",
+    USER: "root",
+    PASSWORD: "uservishal098",
+    HOST : "localhost",
+    dialect: "mysql",
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
     }
-);
+};
+const testInstance = {
+    DB: "ecomm_test_db",
+    USER: "root",
+    PASSWORD: "uservishal098",
+    HOST : "localhost",
+    dialect: "mysql",
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
+};
 
-module.exports = sequelizeInstance;
+module.exports = {
+    development : developmentInstance,
+    test : testInstance
+}

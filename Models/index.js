@@ -1,31 +1,48 @@
-let db ={}
-db.roles = require('./Roles');
-db.users = require('./User');
-db.product = require('./Product');
-db.cart = require('./Cart');
+const sequelize = require("sequelize");
+const env = process.env.NODE_ENV || "development";
+let dbConfig = require("./../config/db.config")[env];
+const sequelizeInstance = new sequelize(
+    dbConfig.DB,
+    dbConfig.USER,
+    dbConfig.PASSWORD, {
+        host: dbConfig.HOST,
+        dialect: dbConfig.dialect,
+        operatorsAliases: 0,
+        pool: dbConfig.pool
+    }
+);
+let db = {}
+db.sequelize = sequelize;
+db.sequelizeInstance = sequelizeInstance;
+db.roles = require('./Roles')(sequelize, sequelizeInstance);
+db.users = require('./User')(sequelize, sequelizeInstance);
+db.product = require('./Product')(sequelize, sequelizeInstance);
+db.cart = require('./Cart')(sequelize, sequelizeInstance);
+db.categories = require('./Category')(sequelize, sequelizeInstance);
 
-db.roles.belongsToMany(db.users,{
+db.roles.belongsToMany(db.users, {
     through: "user_roles",
     foreignKey: "roleId",
     otherKey: "userId",
 });
-db.users.belongsToMany(db.roles,{
+
+db.users.belongsToMany(db.roles, {
     through: "user_roles",
     foreignKey: "userId",
     otherKey: "roleId",
 });
 
-db.product.belongsToMany(db.cart,{
+db.product.belongsToMany(db.cart, {
     through: "cart_products",
-    foreignKey : "productId",
-    otherKey : "cartId",
+    foreignKey: "productId",
+    otherKey: "cartId",
 });
 
-db.cart.belongsToMany(db.product,{
+db.cart.belongsToMany(db.product, {
     through: "cart_products",
-    foreignKey : "cartId",
-    otherKey : "productId",
+    foreignKey: "cartId",
+    otherKey: "productId",
 });
 
-db.Roles = ["users","admin"];
+db.Roles = ["users", "admin"];
 module.exports = db;
