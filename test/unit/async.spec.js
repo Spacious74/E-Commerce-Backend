@@ -5,7 +5,7 @@ let promiseFunc = () => {
     });
 };
 
-describe('Async JS', ()=>{
+xdescribe('Async JS', ()=>{
     test("Test Your Promise", ()=>{
         promiseFunc().then((data)=>{
             expect(data).toBe("I am a promise");

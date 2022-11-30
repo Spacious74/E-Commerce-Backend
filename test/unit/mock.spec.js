@@ -7,7 +7,7 @@ let calculateEmailSends = (n,sendEmails) => {
     return totalEmailsSend;
 };
 
-describe("Mock Functions", ()=>{
+xdescribe("Mock Functions", ()=>{
 
     
     let sendEmails = jest.fn();

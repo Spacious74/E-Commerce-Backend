@@ -6,7 +6,7 @@ expressApp.use(bodyParser.json());
 
 
 let getAllProducts = async (req, res) => {
-    let categoryId = req.query.CategoryId;
+    let categoryId = req.query.categoryId;
     let minPrice = req.query.minPrice;
     let maxPrice = req.query.maxPrice;
     let products = [];
@@ -74,16 +74,18 @@ let getProductById = async (req, res) => {
 }
 
 let addNewProduct = async (req, res, next) => {
-    nameToAdd = req.body.name;
-    priceToAdd = req.body.price;
-    categoryIdToAdd = req.body.categoryId;
-    await db.product.create({
-        name: nameToAdd,
-        price: priceToAdd,
-        categoryId: categoryIdToAdd
-    })
-    res.status(201).send("New Prouct add ho gaya hai !");
-    res.end();
+    let productToAdd = req.body;
+    try{
+        await db.product.create(productToAdd);
+        res.status(201).json(productToAdd);
+        res.end();
+        
+    }catch(err){
+        res.status(500).json({
+            message : "Some internal error occurred"
+        });
+        return;
+    }
 }
 
 let deleteAproduct = async (req, res, next) => {

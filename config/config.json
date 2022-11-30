@@ -1,0 +1,15 @@
+{
+  "test": {
+    "username": "root",
+    "password": "uservishal098",
+    "database": "ecom_test_db",
+    "host": "localhost",
+    "dialect": "mysql",
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    }
+  }
+}

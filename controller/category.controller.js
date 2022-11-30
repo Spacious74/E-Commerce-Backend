@@ -1,25 +1,27 @@
 let db = require('./../Models/index');
-let bodyParser = require('body-parser');
-let express = require('express');
-let expressApp = express();
-expressApp.use(bodyParser.json());
+
 
 
 let getAllCategories = async (req, res) => {
-   let cate = await db.categories.findAll();
-   res.status(200).json(cate);
-   res.end();
+    try {
+        let categories = await db.categories.findAll();
+        res.status(200).json(categories);
+    } catch (err) {
+        res.status(400).json({
+            message: "Some internal error occured",
+        });
+    }
 };
 
 let getCategoryById = async (req, res, next) => {
-   let id = req.params.categoryId;
-   let categories = await db.categories.findAll({
-        where : {
-            id : id
+    let id = req.params.categoryId;
+    let categories = await db.categories.findOne({
+        where: {
+            id: id
         },
-   });
-   res.status(200).json(categories);
-   res.end();
+    });
+    res.status(200).json(categories);
+    res.end();
 };
 
 let addNewCategory = async (req, res, next) => {
@@ -31,10 +33,10 @@ let addNewCategory = async (req, res, next) => {
     res.end();
 }
 
-let deleteAcategory = async (req, res, next) =>{
+let deleteAcategory = async (req, res, next) => {
     let id = req.params.categoryId;
     await db.categories.destroy({
-        where : {
+        where: {
             id: id
         }
     })
@@ -42,15 +44,15 @@ let deleteAcategory = async (req, res, next) =>{
     res.end();
 }
 
-let updateMyCategory = async (req,res,next) => {
+let updateMyCategory = async (req, res, next) => {
 
     let idToUpdate = req.params.categoryId;
     let categoryToUpdate = {
-        name : req.body.name
+        name: req.body.name
     };
-    await db.categories.update(categoryToUpdate,{
-        where : {
-            id : idToUpdate
+    await db.categories.update(categoryToUpdate, {
+        where: {
+            id: idToUpdate
         }
     });
     let updatedCategory = await db.categories.findByPk(idToUpdate);

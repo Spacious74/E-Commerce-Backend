@@ -1,13 +1,13 @@
 module.exports = {
 
-    mockRequestObject : () => {
+    mockRequest : () => {
         const req = {};
         req.body = jest.fn().mockReturnValue(req);
         req.params = jest.fn().mockReturnValue(req);
         req.query = jest.fn().mockReturnValue(req);
         return req;
     },
-    mockResponseObject : () => {
+    mockResponse : () => {
         const res = {};
         res.status = jest.fn().mockReturnValue(res);
         res.json = jest.fn().mockReturnValue(res);
@@ -16,6 +16,5 @@ module.exports = {
         res.end = jest.fn();
         return res;
     }
-
-
+    
 };

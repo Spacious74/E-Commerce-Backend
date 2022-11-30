@@ -1,7 +1,7 @@
 let sum = require('./../../myapp/sum');
 let square = require('./../../myapp/square');
 
-describe("My false test suite", ()=>{
+xdescribe("My false test suite", ()=>{
     test('--- Sum method ---', ()=>{
         expect(sum(2,3)).toBe(5);
         expect(sum(-2,-3)).toBe(-5);

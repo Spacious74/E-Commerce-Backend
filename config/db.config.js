@@ -12,7 +12,7 @@ const developmentInstance = {
     }
 };
 const testInstance = {
-    DB: "ecomm_test_db",
+    DB: "ecom_test_db",
     USER: "root",
     PASSWORD: "uservishal098",
     HOST : "localhost",
